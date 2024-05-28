@@ -1,23 +1,19 @@
 #!/bin/sh 
 
 log() {
-    local glue_container_name="glue-minio-trino-glue-1"
-    local trino_container_name="glue-minio-trino-trino-1"
-    local hive_metastore_container_name="glue-minio-trino-hive-metastore-1"
-    local minio_container_name="glue-minio-trino-minio-1"
 
     local subcommand=$1; [ $# -gt 0 ] && shift
     case $subcommand in
-        "glue"           ) show_log $glue_container_name ;;
-        "trino"          ) show_log $trino_container_name ;;
-        "hive_metastore" ) show_log $hive_metastore_container_name ;;
-        "minio"          ) show_log $minio_container_name ;;
+        "glue"           ) show_log glue ;;
+        "trino"          ) show_log trino ;;
+        "hive_metastore" ) show_log hive-metastore ;;
+        "minio"          ) show_log minio ;;
         *                ) usage ;;
     esac
 }
 
 show_log() {
-    docker container logs -f "$@"
+    docker compose logs -f "$@"
 }
 
 usage() {
