@@ -21,7 +21,8 @@ likely need to add a number of new values. -->
   <property>
     <name>metastore.thrift.uris</name>
     <value>thrift://localhost:9083</value>
-    <description>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.</description>
+    <description>Thrift URI for the remote metastore. Used by metastore client to connect to remote
+      metastore.</description>
   </property>
   <property>
     <name>metastore.task.threads.always</name>
@@ -42,12 +43,12 @@ likely need to add a number of new values. -->
   </property>
 
   <property>
-    <name>fs.s3a.aws.credentials.provider</name>
-    <value>com.amazonaws.auth.DefaultAWSCredentialsProviderChain</value>
+    <name>fs.s3a.access.key</name>
+    <value>minioadmin</value>
   </property>
   <property>
-    <name>fs.s3.aws.credentials.provider</name>
-    <value>com.amazonaws.auth.DefaultAWSCredentialsProviderChain</value>
+    <name>fs.s3a.secret.key</name>
+    <value>minioadmin</value>
   </property>
 
   <property>
@@ -57,7 +58,7 @@ likely need to add a number of new values. -->
 
   <property>
     <name>fs.s3a.endpoint</name>
-    <value>http://minio:9000</value>
+    <value>http://172.18.0.2:9000</value>
   </property>
 
 </configuration>

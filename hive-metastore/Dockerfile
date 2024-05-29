@@ -5,11 +5,11 @@ RUN apt-get update && apt-get install -y openjdk-11-jre-headless wget && \
 
 WORKDIR /tmp
 
-RUN wget "https://repo1.maven.org/maven2/org/apache/hive/hive-standalone-metastore/3.1.2/hive-standalone-metastore-3.1.2-bin.tar.gz" && \
-    tar -zxvf hive-standalone-metastore-3.1.2-bin.tar.gz && \
-    mv apache-hive-metastore-3.1.2-bin /opt/ && \
-    rm hive-standalone-metastore-3.1.2-bin.tar.gz && \
-    ln -s /opt/apache-hive-metastore-3.1.2-bin /opt/apache-hive-metastore
+RUN wget "https://repo1.maven.org/maven2/org/apache/hive/hive-standalone-metastore/3.1.3/hive-standalone-metastore-3.1.3-bin.tar.gz" && \
+    tar -zxvf hive-standalone-metastore-3.1.3-bin.tar.gz && \
+    mv apache-hive-metastore-3.1.3-bin /opt/ && \
+    rm hive-standalone-metastore-3.1.3-bin.tar.gz && \
+    ln -s /opt/apache-hive-metastore-3.1.3-bin /opt/apache-hive-metastore
 
 RUN wget "https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz" && \
     tar xvf hadoop-3.3.6.tar.gz && \
