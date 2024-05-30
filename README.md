@@ -1,22 +1,15 @@
 ## Setup
 
-1. Create metastore schema
+Create metastore schema and init jupyter workspace
 
     ```bash
-    docker compose run --entrypoint bash hive-metastore /opt/apache-hive-metastore/bin/schematool -initSchema -dbType derby
+    ./cli/init.sh
     ```
-
-2. Change permission
-
-    ```
-    sudo chown -R 10000.root jupyter_workspace
-    ```
-
 
 ## start
 
 ```bash
-docker compose up -d
+./cli/start.sh
 ```
 
 ## Access
@@ -24,17 +17,17 @@ docker compose up -d
 * Notebook
 
 ```
-http://localhost:8888
+./cli/browse.sh glue
 ```
 
 * trino
 
 ```
-docker compose exec -it trino trino
+./cli/trino.sh
 ```
 
 * minio
 
 ```
-http://localhost:9001
+./cli/browse.sh minio
 ```
