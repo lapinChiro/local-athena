@@ -19,6 +19,8 @@ services:
     command: ["/home/glue_user/jupyter/jupyter_start.sh"]
     depends_on:
       - minio
+    networks:
+      local-athena_network:
 
   minio:
     image: quay.io/minio/minio
@@ -32,6 +34,9 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
+    networks:
+      local-athena_network:
+        ipv4_address: 10.254.249.89
 
   trino:
     image: trinodb/trino
@@ -45,6 +50,8 @@ services:
       - 8080:8080
     depends_on:
       - hive-metastore
+    networks:
+      local-athena_network:
   
   hive-metastore:
     build:
@@ -54,9 +61,18 @@ services:
       - ./.aws:/home/hive/.aws:ro
       - ./hive-metastore/work:/work
       - ./hive-metastore/metastore-site.xml:/opt/apache-hive-metastore/conf/metastore-site.xml
+    networks:
+      local-athena_network:
       
     working_dir: /work
     environment:
       - AWS_PROFILE=default
     ports:
       - "9083:9083"
+
+networks:
+  local-athena_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.254.249.0/24

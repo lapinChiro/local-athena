@@ -23,6 +23,6 @@
 
     <property>
         <name>fs.s3a.endpoint</name>
-        <value>http://minio:9000</value>
+        <value>http://10.254.249.89:9000</value>
     </property>
 </configuration>

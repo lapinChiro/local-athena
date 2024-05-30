@@ -26,14 +26,3 @@ usage() {
 }
 
 restart "$@"
-
-CREATE TABLE IF NOT EXISTS minio.default.tmp_00101_2 (
-   participant_id varchar,
-   option_uuid_array array < varchar >,
-   entried_at timestamp,
-   answer_uuid char(36)
- )
- WITH (
-   format = 'parquet',
-   external_location = 's3a://bucket001/sample/output/large/00101/type_kbn=00101/item_uuid=552703b5-a22f-47fe-9f2d-51b1f40cbe26/'
- );

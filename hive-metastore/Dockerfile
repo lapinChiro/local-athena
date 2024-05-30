@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y openjdk-11-jre-headless wget && \
+RUN apt-get update && apt-get install -y openjdk-11-jre-headless wget iputils-ping net-tools && \
     useradd -m -s /bin/bash hive
 
 WORKDIR /tmp

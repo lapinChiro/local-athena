@@ -1,4 +1,4 @@
-# /bin/sh
+#!/bin/sh
 
 export AWS_ACCESS_KEY_ID=minioadmin
 export AWS_SECRET_ACCESS_KEY=minioadmin
