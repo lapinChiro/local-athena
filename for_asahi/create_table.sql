@@ -1,4 +1,4 @@
-CREATE SCHEMA minio.asahi WITH(LOCATION = 's3a://asahi_data/');
+CREATE SCHEMA minio.asahi WITH(LOCATION = 's3a://asahi-data/');
 USE minio.asahi;
 
 CREATE TABLE IF NOT EXISTS minio.asahi.answers_00101 (
@@ -6,12 +6,11 @@ CREATE TABLE IF NOT EXISTS minio.asahi.answers_00101 (
   user_id_code varchar,
   entried_at varchar,
   option_uuids array<varchar>,
-  type_kbn varchar,
   item_uuid varchar,
   survey_uuid varchar
 )
 WITH (
-  external_location = 's3://asahi_data/output/large/00101/type_kbn=00101',
+  external_location = 's3://asahi-data/output/large/00101/type_kbn=00101',
   format = 'parquet',
   partitioned_by = ARRAY['item_uuid', 'survey_uuid']
 );
@@ -22,12 +21,11 @@ CREATE TABLE IF NOT EXISTS minio.asahi.answers_00102 (
   user_id_code varchar,
   entried_at varchar,
   option_uuids array<varchar>,
-  type_kbn varchar,
   item_uuid varchar,
   survey_uuid varchar
 )
 WITH (
-  external_location = 's3://asahi_data/output/large/00102/type_kbn=00102',
+  external_location = 's3://asahi-data/output/large/00102/type_kbn=00102',
   format = 'parquet',
   partitioned_by = ARRAY['item_uuid', 'survey_uuid']
 );
@@ -38,12 +36,11 @@ CREATE TABLE IF NOT EXISTS minio.asahi.answers_00104 (
   user_id_code varchar,
   entried_at varchar,
   option_uuids array<varchar>,
-  type_kbn varchar,
   item_uuid varchar,
   survey_uuid varchar
 )
 WITH (
-  external_location = 's3://asahi_data/output/large/00104/type_kbn=00104',
+  external_location = 's3://asahi-data/output/large/00104/type_kbn=00104',
   format = 'parquet',
   partitioned_by = ARRAY['item_uuid', 'survey_uuid']
 );
@@ -54,12 +51,11 @@ CREATE TABLE IF NOT EXISTS minio.asahi.answers_00105 (
   user_id_code varchar,
   entried_at varchar,
   option_uuids array<varchar>,
-  type_kbn varchar,
   item_uuid varchar,
   survey_uuid varchar
 )
 WITH (
-  external_location = 's3://asahi_data/output/large/00105/type_kbn=00105',
+  external_location = 's3://asahi-data/output/large/00105/type_kbn=00105',
   format = 'parquet',
   partitioned_by = ARRAY['item_uuid', 'survey_uuid']
 );
