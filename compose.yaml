@@ -20,7 +20,7 @@ services:
     depends_on:
       - minio
     networks:
-      local-athena_network:
+      for_static_ip_network:
 
   minio:
     image: quay.io/minio/minio
@@ -35,8 +35,8 @@ services:
       - "9000:9000"
       - "9001:9001"
     networks:
-      local-athena_network:
-        ipv4_address: 10.254.249.89
+      for_static_ip_network:
+        ipv4_address: 10.254.249.89 # trinoがクエリを実行する際に名前解決できないらしいので固定した
 
   trino:
     image: trinodb/trino
@@ -51,7 +51,7 @@ services:
     depends_on:
       - hive-metastore
     networks:
-      local-athena_network:
+      for_static_ip_network:
   
   hive-metastore:
     build:
@@ -62,7 +62,7 @@ services:
       - ./hive-metastore/work:/work
       - ./hive-metastore/metastore-site.xml:/opt/apache-hive-metastore/conf/metastore-site.xml
     networks:
-      local-athena_network:
+      for_static_ip_network:
       
     working_dir: /work
     environment:
@@ -71,7 +71,7 @@ services:
       - "9083:9083"
 
 networks:
-  local-athena_network:
+  for_static_ip_network:
     ipam:
       driver: default
       config:
