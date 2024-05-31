@@ -70,20 +70,20 @@ services:
     ports:
       - "9083:9083"
   
-  web:
-    build:
-      context: web/
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-    environment:
-      - TZ=Asia/Tokyo
-    volumes:
-      - ./web/app:/app
-    networks:
-      for_static_ip_network:
+  # web:
+  #   build:
+  #     context: web/
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - TZ=Asia/Tokyo
+  #   volumes:
+  #     - ./web/app:/app
+  #   networks:
+  #     for_static_ip_network:
 
 networks:
   for_static_ip_network:
