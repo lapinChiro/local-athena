@@ -9,6 +9,7 @@ restart() {
     "trino") restart_service trino ;;
     "hive-metastore") restart_service hive-metastore ;;
     "minio") restart_service minio ;;
+    "web") restart_service web ;;
     *) usage ;;
     esac
 }
@@ -23,6 +24,7 @@ usage() {
     echo ' restart trino              trinoコンテナを再起動する' 1>&2
     echo ' restart hive-metastore     hive-metastoreコンテナを再起動する' 1>&2
     echo ' restart minio              minioコンテナを再起動する' 1>&2
+    echo ' restart web                webコンテナを再起動する' 1>&2
 }
 
 restart "$@"

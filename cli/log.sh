@@ -9,6 +9,7 @@ log() {
     "trino") show_log trino ;;
     "hive-metastore") show_log hive-metastore ;;
     "minio") show_log minio ;;
+    "web") show_log web ;;
     *) usage ;;
     esac
 }
@@ -23,6 +24,7 @@ usage() {
     echo ' log trino              trinoコンテナのログを表示する' 1>&2
     echo ' log hive-metastore     hive-metastoreコンテナのログを表示する' 1>&2
     echo ' log minio              minioコンテナのログを表示する' 1>&2
+    echo ' log web                webコンテナのログを表示する' 1>&2
 }
 
 log "$@"

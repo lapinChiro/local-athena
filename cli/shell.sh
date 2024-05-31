@@ -9,6 +9,7 @@ shell() {
     "trino") entry_shell trino ;;
     "hive-metastore") entry_shell hive-metastore ;;
     "minio") entry_shell minio ;;
+    "web") entry_shell web ;;
     *) usage ;;
     esac
 }
@@ -23,6 +24,7 @@ usage() {
     echo ' shell trino              trinoコンテナを再起動する' 1>&2
     echo ' shell hive-metastore     hive-metastoreコンテナを再起動する' 1>&2
     echo ' shell minio              minioコンテナを再起動する' 1>&2
+    echo ' shell  web               webコンテナを再起動する' 1>&2
 }
 
 shell "$@"

@@ -8,3 +8,4 @@ jupyter_workspace/*
 minio/data/*
 !minio/data/.gitkeep
 asahi_data
+sample_client
