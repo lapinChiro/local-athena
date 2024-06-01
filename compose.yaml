@@ -84,7 +84,7 @@ services:
     volumes:
       - ./web:/app
       - ./web/target:/tmp/target
-    command: /bin/sh -c "cargo run"
+    command: /bin/sh -c "cargo watch -x run"
     tty: true
 
 networks:
