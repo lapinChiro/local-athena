@@ -1,5 +1,5 @@
 [package]
-name = "client"
+name = "web"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,6 +8,6 @@ edition = "2021"
 [dependencies]
 prusto = { git = "https://github.com/lapinChiro/prusto", features = ["presto"] }
 serde = "=1.0.203"
-tokio = "=1.38.0"
-
+axum = "0.7.2"
+tokio = { version = "1.38.0", features = ["full"] }
 

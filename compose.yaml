@@ -69,21 +69,23 @@ services:
       - AWS_PROFILE=default
     ports:
       - "9083:9083"
-  
-  # web:
-  #   build:
-  #     context: web/
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - TZ=Asia/Tokyo
-  #   volumes:
-  #     - ./web/app:/app
-  #   networks:
-  #     for_static_ip_network:
+
+  web:
+    build:
+      context: ./web
+    environment:
+      CHOKIDAR_USEPOLLING: 1
+      CARGO_TARGET_DIR: /tmp/target
+      TZ: Asia/Tokyo
+    ports:
+      - 3511:3511
+    networks:
+      - for_static_ip_network
+    volumes:
+      - ./web:/app
+      - ./web/target:/tmp/target
+    command: /bin/sh -c "cargo run"
+    tty: true
 
 networks:
   for_static_ip_network:
