@@ -1,7 +1,7 @@
 services:
 
   glue:
-    image: amazon/aws-glue-libs:glue_libs_3.0.0_image_01
+    image: amazon/aws-glue-libs:glue_libs_4.0.0_image_01
     restart: always
     volumes:
       - ./.aws:/home/glue_user/.aws:ro

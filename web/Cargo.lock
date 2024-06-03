@@ -1561,6 +1561,7 @@ dependencies = [
  "axum",
  "prusto",
  "serde",
+ "serde_json",
  "tokio",
 ]
 
