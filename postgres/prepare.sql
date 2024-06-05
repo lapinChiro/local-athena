@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS tasks;
-CREATE TABLE tasks (
+DROP TABLE IF EXISTS public.tasks;
+CREATE TABLE public.tasks (
 	uuid UUID NOT NULL PRIMARY KEY DEFAULT gen_random_uuid()
 	,query_statement TEXT NOT NULL
 	,status TEXT NOT NULL
