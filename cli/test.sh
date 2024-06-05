@@ -19,7 +19,7 @@ exec_execute_sql_sync() {
 }
 
 exec_execute_sql_async() {
-  curl -X POST -H "Content-Type: application/json" -d "{\"sql\":\"SELECT * FROM minio.asahi.answers_00101 LIMIT 2 \"}" 'http://localhost:3511/execute_sql_async'
+  curl -X POST -H "Content-Type: application/json" -d "{\"sql\":\"SELECT * FROM minio.bucket.people LIMIT 2 \"}" 'http://localhost:3511/execute_sql_async'
 }
 
 exec_check_job_status() {
