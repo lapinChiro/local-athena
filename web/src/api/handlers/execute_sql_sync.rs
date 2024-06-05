@@ -16,8 +16,14 @@ pub struct Request {
 
 pub async fn handler(extract::Json(request): extract::Json<Request>) -> Json<TrinoResponse> {
     let result = client::simple_request(&request.sql).await;
-    Json(TrinoResponse {
-        sql: request.sql,
-        result,
-    })
+    match result {
+        Ok(result) => Json(TrinoResponse {
+            sql: request.sql,
+            result,
+        }),
+        Err(e) => Json(TrinoResponse {
+            sql: request.sql,
+            result: vec![vec![format!("{}", e).into()]],
+        }),
+    }
 }

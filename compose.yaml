@@ -86,6 +86,20 @@ services:
       - ./web/target:/tmp/target
     command: /bin/sh -c "cargo watch -x run"
     tty: true
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.3
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=multi
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - 5443:5432
+    networks:
+      - for_static_ip_network
 
 networks:
   for_static_ip_network:

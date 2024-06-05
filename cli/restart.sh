@@ -10,6 +10,8 @@ restart() {
     "hive-metastore") restart_service hive-metastore ;;
     "minio") restart_service minio ;;
     "web") restart_service web ;;
+    "postgres") restart_service postgres ;;
+    "all") restart_service ;;
     *) usage ;;
     esac
 }
@@ -25,6 +27,8 @@ usage() {
     echo ' restart hive-metastore     hive-metastoreコンテナを再起動する' 1>&2
     echo ' restart minio              minioコンテナを再起動する' 1>&2
     echo ' restart web                webコンテナを再起動する' 1>&2
+    echo ' restart postgres           postgresコンテナを再起動する' 1>&2
+    echo ' restart all                全てのコンテナを再起動する' 1>&2
 }
 
 restart "$@"

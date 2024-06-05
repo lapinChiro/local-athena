@@ -10,6 +10,7 @@ log() {
     "hive-metastore") show_log hive-metastore ;;
     "minio") show_log minio ;;
     "web") show_log web ;;
+    "postgres") show_log postgres ;;
     *) usage ;;
     esac
 }
@@ -25,6 +26,7 @@ usage() {
     echo ' log hive-metastore     hive-metastoreコンテナのログを表示する' 1>&2
     echo ' log minio              minioコンテナのログを表示する' 1>&2
     echo ' log web                webコンテナのログを表示する' 1>&2
+    echo ' log postgres           postgresコンテナのログを表示する' 1>&2
 }
 
 log "$@"

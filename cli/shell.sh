@@ -10,6 +10,7 @@ shell() {
     "hive-metastore") entry_shell hive-metastore ;;
     "minio") entry_shell minio ;;
     "web") entry_shell web ;;
+    "postgres") entry_shell postgres ;;
     *) usage ;;
     esac
 }
@@ -25,6 +26,7 @@ usage() {
     echo ' shell hive-metastore     hive-metastoreコンテナを再起動する' 1>&2
     echo ' shell minio              minioコンテナを再起動する' 1>&2
     echo ' shell  web               webコンテナを再起動する' 1>&2
+    echo ' shell  postgres          postgresコンテナを再起動する' 1>&2
 }
 
 shell "$@"

@@ -16,6 +16,6 @@ pub async fn sample_request() {
     sample_request::request(build_client()).await
 }
 
-pub async fn simple_request(sql: &str) -> Vec<Vec<Value>> {
+pub async fn simple_request(sql: &str) -> anyhow::Result<Vec<Vec<Value>>> {
     simple_request::request(build_client(), sql).await
 }

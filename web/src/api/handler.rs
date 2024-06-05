@@ -18,4 +18,12 @@ fn build_router() -> Router {
             "/execute_sql_sync",
             post(handlers::execute_sql_sync::handler),
         )
+        .route(
+            "/execute_sql_async",
+            post(handlers::execute_sql_async::handler),
+        )
+        .route(
+            "/check_job_status",
+            post(handlers::check_job_status::handler),
+        )
 }
