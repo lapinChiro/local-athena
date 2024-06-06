@@ -1,4 +1,4 @@
-use super::query_result::QueryResult;
+use crate::query_result::QueryResult;
 use prusto::{Client, Row};
 
 pub async fn request(client: Client, sql: &str) -> anyhow::Result<QueryResult> {

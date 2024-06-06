@@ -1,0 +1,21 @@
+[package]
+name = "postgres"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "^1.0.203", features = ["derive"] }
+tokio = { version = "1.38.0", features = ["full"] }
+serde_json = "1.0.117"
+resident-utils = { version = "0.5", features = ["postgres"] }
+anyhow = "1"
+postgres-types = { version = "0.2.4", features = [
+    "derive",
+    "with-chrono-0_4",
+    "with-serde_json-1",
+    "with-uuid-1",
+] }
+uuid = { version = "1.8.0", features = ["serde", "v4"] }
+chrono = { version = "0.4.38", features = ["serde"] }

@@ -4,11 +4,11 @@ use serde_json::{json, Value};
 use std::time::Duration;
 use uuid::Uuid;
 
-use super::super::trino::client::simple_request;
-use super::postgres::{get_postgres_pool, Task};
+use trino::client::simple_request;
+use postgres::{get_postgres_pool, Task};
 
 async fn get_task(pg_conn: &Client) -> anyhow::Result<Vec<Task>> {
-    let res = super::postgres::set_get_pending_task(pg_conn).await?;
+    let res = postgres::set_get_pending_task(pg_conn).await?;
     Ok(res)
 }
 
@@ -19,7 +19,7 @@ async fn set_finish_task(
     result_stauts: String,
 ) -> anyhow::Result<Vec<Task>> {
     let res =
-        super::postgres::set_finish_task(pg_conn, task_uuid, query_result, result_stauts).await;
+        postgres::set_finish_task(pg_conn, task_uuid, query_result, result_stauts).await;
     println!("set_finish_task");
     match res {
         Ok(r) => Ok(r),

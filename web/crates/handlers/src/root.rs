@@ -1,4 +1,4 @@
-use super::super::super::trino::client;
+use trino::client;
 use axum::response::Html;
 
 pub async fn handler() -> Html<&'static str> {

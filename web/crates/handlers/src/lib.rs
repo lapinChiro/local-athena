@@ -1,4 +1,8 @@
-use super::handlers;
+mod root;
+mod execute_sql_sync;
+mod execute_sql_async;
+mod check_job_status;
+
 use axum::{
     routing::{get, post},
     Router,
@@ -13,17 +17,17 @@ pub async fn make_router() {
 
 fn build_router() -> Router {
     Router::new()
-        .route("/", get(handlers::root::handler))
+        .route("/", get(root::handler))
         .route(
             "/execute_sql_sync",
-            post(handlers::execute_sql_sync::handler),
+            post(execute_sql_sync::handler),
         )
         .route(
             "/execute_sql_async",
-            post(handlers::execute_sql_async::handler),
+            post(execute_sql_async::handler),
         )
         .route(
             "/check_job_status",
-            post(handlers::check_job_status::handler),
+            post(check_job_status::handler),
         )
 }

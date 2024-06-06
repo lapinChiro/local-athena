@@ -48,20 +48,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b3d1d046238990b9cf5bcde22a3fb3584ee5cf65fb2765f454ed428c7a0063da"
 
 [[package]]
-name = "api"
+name = "app"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "axum",
  "chrono",
- "handlers",
- "looper",
- "postgres",
+ "postgres-types",
  "prusto",
+ "resident-utils",
  "serde",
  "serde_json",
  "tokio",
- "trino",
  "uuid",
 ]
 
@@ -548,23 +546,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "handlers"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "axum",
- "chrono",
- "postgres",
- "postgres-types",
- "prusto",
- "serde",
- "serde_json",
- "tokio",
- "trino",
- "uuid",
-]
-
-[[package]]
 name = "hashbrown"
 version = "0.14.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -661,9 +642,9 @@ checksum = "df3b46402a9d5adb4c86a0cf463f42e19994e3ee891101b1841f30a545cb49a9"
 
 [[package]]
 name = "hyper"
-version = "0.14.29"
+version = "0.14.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f361cde2f109281a220d4307746cdfd5ee3f410da58a70377762396775634b33"
+checksum = "bf96e135eb83a2a8ddf766e426a841d8ddd7449d5f00d34ea02b41d2f19eef80"
 dependencies = [
  "bytes",
  "futures-channel",
@@ -710,7 +691,7 @@ checksum = "ec3efd23720e2049821a693cbc7e65ea87c72f1c58ff2f9522ff332b1491e590"
 dependencies = [
  "futures-util",
  "http 0.2.12",
- "hyper 0.14.29",
+ "hyper 0.14.28",
  "rustls",
  "tokio",
  "tokio-rustls",
@@ -840,24 +821,6 @@ name = "log"
 version = "0.4.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "90ed8c1e510134f979dbc4f070f87d4313098b704861a105fe34231c70a3901c"
-
-[[package]]
-name = "looper"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "axum",
- "chrono",
- "postgres",
- "postgres-types",
- "prusto",
- "resident-utils",
- "serde",
- "serde_json",
- "tokio",
- "trino",
- "uuid",
-]
 
 [[package]]
 name = "matchit"
@@ -1091,20 +1054,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
-name = "postgres"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "chrono",
- "postgres-types",
- "resident-utils",
- "serde",
- "serde_json",
- "tokio",
- "uuid",
-]
-
-[[package]]
 name = "postgres-derive"
 version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1158,9 +1107,9 @@ checksum = "5b40af805b3121feab8a3c29f04d8ad262fa8e0561883e7653e024ae4479e6de"
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.85"
+version = "1.0.84"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22244ce15aa966053a896d1accb3a6e68469b97c7f33f284b99f0d576879fc23"
+checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
 dependencies = [
  "unicode-ident",
 ]
@@ -1301,7 +1250,7 @@ dependencies = [
  "h2",
  "http 0.2.12",
  "http-body 0.4.6",
- "hyper 0.14.29",
+ "hyper 0.14.28",
  "hyper-rustls",
  "ipnet",
  "js-sys",
@@ -1792,17 +1741,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c06d3da6113f116aaee68e4d601191614c9053067f9ab7f6edbcb161237daa54"
 dependencies = [
  "once_cell",
-]
-
-[[package]]
-name = "trino"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "prusto",
- "serde",
- "serde_json",
- "tokio",
 ]
 
 [[package]]

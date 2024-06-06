@@ -1,4 +1,4 @@
-use super::super::super::looper_task::postgres;
+use postgres;
 
 use axum::{extract, response::Json};
 use serde::{Deserialize, Serialize};

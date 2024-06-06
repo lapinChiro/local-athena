@@ -1,4 +1,4 @@
-use super::{query_result, sample_request, simple_request};
+use crate::{query_result, sample_request, simple_request};
 use prusto::{auth::Auth, Client, ClientBuilder};
 
 fn build_client() -> Client {
