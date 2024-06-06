@@ -1,11 +1,10 @@
-use super::super::super::trino::client;
+use super::super::super::trino;
 use axum::{extract, response::Json};
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
 #[derive(Serialize)]
 pub struct TrinoResponse {
-    result: Vec<Vec<Value>>,
+    result: trino::query_result::QueryResult,
     sql: String,
 }
 
@@ -15,7 +14,7 @@ pub struct Request {
 }
 
 pub async fn handler(extract::Json(request): extract::Json<Request>) -> Json<TrinoResponse> {
-    let result = client::simple_request(&request.sql).await;
+    let result = trino::client::simple_request(&request.sql).await;
     match result {
         Ok(result) => Json(TrinoResponse {
             sql: request.sql,
@@ -23,7 +22,10 @@ pub async fn handler(extract::Json(request): extract::Json<Request>) -> Json<Tri
         }),
         Err(e) => Json(TrinoResponse {
             sql: request.sql,
-            result: vec![vec![format!("{}", e).into()]],
+            result: trino::query_result::QueryResult {
+                headers: vec!["error".to_owned()],
+                rows: vec![vec![format!("{}", e).into()]],
+            },
         }),
     }
 }

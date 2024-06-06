@@ -1,11 +1,12 @@
+use super::query_result::QueryResult;
 use prusto::{Client, Row};
-use serde_json::Value;
 
-pub async fn request(client: Client, sql: &str) -> anyhow::Result<Vec<Vec<Value>>> {
+pub async fn request(client: Client, sql: &str) -> anyhow::Result<QueryResult> {
     println!("{sql}");
-    let result: Vec<Row> = client.get_all::<Row>(sql.into()).await?.into_vec();
 
-    let result_2 = client.get_all::<Row>(sql.into()).await?.split();
-    println!("{:#?}", result_2);
-    Ok(result.iter().map(|row| row.clone().into_json()).collect())
+    let result = client.get_all::<Row>(sql.into()).await?.split();
+    println!("{:#?}", result);
+    let headers = result.0.iter().map(|row| row.0.clone()).collect();
+    let rows = result.1.iter().map(|row| row.clone().into_json()).collect();
+    Ok(QueryResult { headers, rows })
 }
