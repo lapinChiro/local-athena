@@ -53,16 +53,12 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "axum",
- "chrono",
  "handlers",
  "looper",
  "postgres",
- "prusto",
- "serde",
  "serde_json",
  "tokio",
  "trino",
- "uuid",
 ]
 
 [[package]]
