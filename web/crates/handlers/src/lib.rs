@@ -1,7 +1,7 @@
-mod root;
-mod execute_sql_sync;
-mod execute_sql_async;
 mod check_job_status;
+mod execute_sql_async;
+mod execute_sql_sync;
+mod root;
 
 use axum::{
     routing::{get, post},
@@ -18,16 +18,7 @@ pub async fn make_router() {
 fn build_router() -> Router {
     Router::new()
         .route("/", get(root::handler))
-        .route(
-            "/execute_sql_sync",
-            post(execute_sql_sync::handler),
-        )
-        .route(
-            "/execute_sql_async",
-            post(execute_sql_async::handler),
-        )
-        .route(
-            "/check_job_status",
-            post(check_job_status::handler),
-        )
+        .route("/execute_sql_sync", post(execute_sql_sync::handler))
+        .route("/execute_sql_async", post(execute_sql_async::handler))
+        .route("/check_job_status", post(check_job_status::handler))
 }

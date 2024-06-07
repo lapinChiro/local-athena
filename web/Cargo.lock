@@ -553,10 +553,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "axum",
- "chrono",
  "postgres",
  "postgres-types",
- "prusto",
  "serde",
  "serde_json",
  "tokio",
@@ -849,12 +847,8 @@ dependencies = [
  "axum",
  "chrono",
  "postgres",
- "postgres-types",
- "prusto",
  "resident-utils",
- "serde",
  "serde_json",
- "tokio",
  "trino",
  "uuid",
 ]

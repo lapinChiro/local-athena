@@ -6,7 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-prusto = { git = "https://github.com/lapinChiro/prusto", features = ["presto"] }
 serde = { version = "^1.0.203", features = ["derive"] }
 axum = "0.7.2"
 tokio = { version = "1.38.0", features = ["full"] }
@@ -19,6 +18,5 @@ postgres-types = { version = "0.2.4", features = [
     "with-uuid-1",
 ] }
 uuid = { version = "1.8.0", features = ["serde", "v4"] }
-chrono = { version = "0.4.38", features = ["serde"] }
 trino = { path = "../trino" }
 postgres = { path = "../postgres" }
