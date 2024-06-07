@@ -547,12 +547,12 @@ dependencies = [
 name = "handlers"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "axum",
  "postgres",
  "postgres-types",
  "serde",
  "serde_json",
+ "thiserror",
  "tokio",
  "trino",
  "uuid",
@@ -839,12 +839,13 @@ checksum = "90ed8c1e510134f979dbc4f070f87d4313098b704861a105fe34231c70a3901c"
 name = "looper"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "axum",
  "chrono",
  "postgres",
  "resident-utils",
  "serde_json",
+ "thiserror",
+ "tokio",
  "trino",
  "uuid",
 ]
@@ -1084,12 +1085,12 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 name = "postgres"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "chrono",
  "postgres-types",
  "resident-utils",
  "serde",
  "serde_json",
+ "thiserror",
  "tokio",
  "uuid",
 ]
@@ -1788,10 +1789,10 @@ dependencies = [
 name = "trino"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "prusto",
  "serde",
  "serde_json",
+ "thiserror",
  "tokio",
 ]
 

@@ -6,8 +6,9 @@ use uuid::Uuid;
 
 use postgres::{get_postgres_pool, Task};
 use trino::client::simple_request;
+mod error;
 
-async fn get_task(pg_conn: &Client) -> anyhow::Result<Vec<Task>> {
+async fn get_task(pg_conn: &Client) -> Result<Vec<Task>, error::Error> {
     let res = postgres::set_get_pending_task(pg_conn).await?;
     Ok(res)
 }
@@ -17,19 +18,12 @@ async fn set_finish_task(
     task_uuid: &Uuid,
     query_result: Value,
     result_stauts: String,
-) -> anyhow::Result<Vec<Task>> {
-    let res = postgres::set_finish_task(pg_conn, task_uuid, query_result, result_stauts).await;
-    println!("set_finish_task");
-    match res {
-        Ok(r) => Ok(r),
-        Err(e) => {
-            println!("PANIPANI");
-            panic!("{e}")
-        }
-    }
+) -> Result<Vec<Task>, error::Error> {
+    let res = postgres::set_finish_task(pg_conn, task_uuid, query_result, result_stauts).await?;
+    Ok(res)
 }
 
-pub async fn run() -> anyhow::Result<()> {
+pub async fn run() -> Result<(), error::Error> {
     let pg_pool = get_postgres_pool()?;
 
     #[allow(clippy::let_underscore_future)]
@@ -57,29 +51,50 @@ pub async fn run() -> anyhow::Result<()> {
                             Some(query_statement) => {
                                 match simple_request(query_statement.as_str()).await {
                                     Ok(response) => {
-                                        let pg_res = set_finish_task(
-                                            &pg_client,
-                                            &task[0].uuid.unwrap(),
-                                            json!({"result": response}),
-                                            "succeeded".to_owned(),
-                                        )
-                                        .await;
+                                        let task_uuid = &task[0].uuid;
+                                        match task_uuid {
+                                            Some(task_uuid) => {
+                                                let pg_res = set_finish_task(
+                                                    &pg_client,
+                                                    task_uuid,
+                                                    json!({"result": response}),
+                                                    "succeeded".to_owned(),
+                                                )
+                                                .await;
 
-                                        match pg_res {
-                                            Ok(_) => {
-                                                println!("finish task: {}", &task[0].uuid.unwrap())
+                                                match pg_res {
+                                                    Ok(_) => {
+                                                        println!("finish task: {}", task_uuid)
+                                                    }
+                                                    Err(e) => println!("PG Err, {e}"),
+                                                }
                                             }
-                                            Err(e) => panic!("PG Err, {e}"),
+                                            None => println!("task_uuid is None"),
                                         }
                                     }
                                     Err(e) => {
-                                        let _pg_res = set_finish_task(
-                                            &pg_client,
-                                            &task[0].uuid.unwrap(),
-                                            json!({"error" : format!("Trino Err, {e}")}),
-                                            "failed".to_owned(),
-                                        )
-                                        .await;
+                                        let task_uuid = &task[0].uuid;
+                                        match task_uuid {
+                                            Some(task_uuid) => {
+                                                let pg_res = set_finish_task(
+                                                    &pg_client,
+                                                    task_uuid,
+                                                    json!({"error" : format!("Trino Err, {e}")}),
+                                                    "failed".to_owned(),
+                                                )
+                                                .await;
+
+                                                match pg_res {
+                                                    Ok(_) => {
+                                                        println!("finish task: {}", task_uuid)
+                                                    }
+                                                    Err(e) => println!("PG Err, {e}"),
+                                                }
+                                            }
+                                            None => {
+                                                println!("task_uuid is None. Error: {e}")
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -100,7 +115,7 @@ pub async fn run() -> anyhow::Result<()> {
     )];
 
     for handle in handles {
-        handle.await.unwrap();
+        handle.await?;
     }
     Ok(())
 }

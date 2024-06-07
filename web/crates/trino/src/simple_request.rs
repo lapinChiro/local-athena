@@ -1,7 +1,8 @@
+use crate::error::Error;
 use crate::query_result::QueryResult;
 use prusto::{Client, Row};
 
-pub async fn request(client: Client, sql: &str) -> anyhow::Result<QueryResult> {
+pub async fn request(client: Client, sql: &str) -> Result<QueryResult, Error> {
     println!("{sql}");
 
     let result = client.get_all::<Row>(sql.into()).await?.split();

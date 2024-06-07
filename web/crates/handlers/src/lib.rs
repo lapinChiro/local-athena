@@ -1,4 +1,5 @@
 mod check_job_status;
+mod error;
 mod execute_sql_async;
 mod execute_sql_sync;
 mod root;
