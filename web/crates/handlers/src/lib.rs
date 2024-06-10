@@ -1,7 +1,7 @@
-mod check_job_status;
 mod error;
 mod execute_sql_async;
 mod execute_sql_sync;
+mod job_status;
 mod root;
 
 use axum::{
@@ -21,5 +21,5 @@ fn build_router() -> Router {
         .route("/", get(root::handler))
         .route("/execute_sql_sync", post(execute_sql_sync::handler))
         .route("/execute_sql_async", post(execute_sql_async::handler))
-        .route("/check_job_status", post(check_job_status::handler))
+        .route("/job_status", post(job_status::handler))
 }

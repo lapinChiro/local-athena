@@ -6,9 +6,15 @@ pub enum Error {
     #[error("Postgres {0}")]
     Postgres(#[from] postgres::error::Error),
 
+    #[error("Trino {0}")]
+    Trino(#[from] trino::error::Error),
+
     #[error("Json {0}")]
     Json(#[from] serde_json::Error),
 
     #[error("TokioJoinHandle {0}")]
     TokioJoinHandle(#[from] JoinError),
+
+    #[error("InvalidTask")]
+    InvalidTask,
 }

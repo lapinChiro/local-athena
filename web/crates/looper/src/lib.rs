@@ -23,6 +23,39 @@ async fn set_finish_task(
     Ok(res)
 }
 
+async fn process_query_statement(
+    query_statement: &Option<String>,
+    task_uuid: &Option<Uuid>,
+    pg_client: &Client,
+) -> Result<(), error::Error> {
+    if query_statement.is_none() || task_uuid.is_none() {
+        return Err(error::Error::InvalidTask);
+    };
+
+    match simple_request(query_statement.clone().unwrap().as_str()).await {
+        Ok(response) => {
+            set_finish_task(
+                pg_client,
+                &task_uuid.unwrap(),
+                json!({"result": response}),
+                "succeeded".to_owned(),
+            )
+            .await?;
+        }
+        Err(e) => {
+            set_finish_task(
+                pg_client,
+                &task_uuid.unwrap(),
+                json!({"error" : format!("Trino Err, {e}")}),
+                "failed".to_owned(),
+            )
+            .await?;
+        }
+    }
+
+    Ok(())
+}
+
 pub async fn run() -> Result<(), error::Error> {
     let pg_pool = get_postgres_pool()?;
 
@@ -47,59 +80,13 @@ pub async fn run() -> Result<(), error::Error> {
                         LoopState::Duration(Duration::from_secs(1))
                     } else {
                         println!("task={:?}", task);
-                        match &task[0].query_statement {
-                            Some(query_statement) => {
-                                match simple_request(query_statement.as_str()).await {
-                                    Ok(response) => {
-                                        let task_uuid = &task[0].uuid;
-                                        match task_uuid {
-                                            Some(task_uuid) => {
-                                                let pg_res = set_finish_task(
-                                                    &pg_client,
-                                                    task_uuid,
-                                                    json!({"result": response}),
-                                                    "succeeded".to_owned(),
-                                                )
-                                                .await;
-
-                                                match pg_res {
-                                                    Ok(_) => {
-                                                        println!("finish task: {}", task_uuid)
-                                                    }
-                                                    Err(e) => println!("PG Err, {e}"),
-                                                }
-                                            }
-                                            None => println!("task_uuid is None"),
-                                        }
-                                    }
-                                    Err(e) => {
-                                        let task_uuid = &task[0].uuid;
-                                        match task_uuid {
-                                            Some(task_uuid) => {
-                                                let pg_res = set_finish_task(
-                                                    &pg_client,
-                                                    task_uuid,
-                                                    json!({"error" : format!("Trino Err, {e}")}),
-                                                    "failed".to_owned(),
-                                                )
-                                                .await;
-
-                                                match pg_res {
-                                                    Ok(_) => {
-                                                        println!("finish task: {}", task_uuid)
-                                                    }
-                                                    Err(e) => println!("PG Err, {e}"),
-                                                }
-                                            }
-                                            None => {
-                                                println!("task_uuid is None. Error: {e}")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            None => panic!("invalid query_statement"),
-                        }
+                        let _ = process_query_statement(
+                            &task[0].query_statement,
+                            &task[0].uuid,
+                            &pg_client,
+                        )
+                        .await
+                        .map_err(|e| println!("process_query_statement_error: {e}"));
                         LoopState::Continue
                     }
                 }
