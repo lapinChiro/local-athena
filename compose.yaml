@@ -5,12 +5,16 @@ services:
     restart: always
     volumes:
       - ./.aws:/home/glue_user/.aws:ro
-      - ./jupyter_workspace:/home/glue_user/workspace/jupyter_workspace/
+      - ./glue/workspace/jupyter_workspace:/home/glue_user/workspace/jupyter_workspace/
+      - ./glue/workspace/job_workspace/:/home/glue_user/workspace/
       - ./glue/spark/core-site.xml:/home/glue_user/spark/conf/core-site.xml
       - ./glue/spark/hive-site.xml:/home/glue_user/spark/conf/hive-site.xml
     environment:
       - AWS_PROFILE=default
+      - AWS_REGION=ap-northeast-1
       - DISABLE_SSL=true
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin
     ports:
       - 4040:4040
       - 18080:18080
