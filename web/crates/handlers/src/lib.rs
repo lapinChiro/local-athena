@@ -9,11 +9,13 @@ use axum::{
     Router,
 };
 
-pub async fn make_router() {
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3511").await.unwrap();
+pub async fn make_router() -> Result<(), error::Error> {
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3511").await?;
     let router = build_router();
 
-    axum::serve(listener, router).await.unwrap();
+    axum::serve(listener, router).await?;
+
+    Ok(())
 }
 
 fn build_router() -> Router {

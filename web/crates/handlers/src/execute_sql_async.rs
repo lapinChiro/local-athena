@@ -30,13 +30,10 @@ pub async fn handler(extract::Json(request): extract::Json<Request>) -> Json<Set
     };
     if let Some(pg_client) = pg_client {
         match postgres::set_task(&pg_client, &request.sql).await {
-            Ok(task) => {
-                let task_uuid = task.uuid.unwrap();
-                Json(SetJobResponse {
-                    sql: request.sql,
-                    task_uuid: Some(task_uuid),
-                })
-            }
+            Ok(task) => Json(SetJobResponse {
+                sql: request.sql,
+                task_uuid: task.uuid,
+            }),
             Err(e) => {
                 println!("{e}");
                 Json(SetJobResponse {

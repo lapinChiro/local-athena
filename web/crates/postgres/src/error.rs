@@ -14,4 +14,7 @@ pub enum Error {
 
     #[error("CreateTask")]
     CreateTask,
+
+    #[error("InvalidTask")]
+    InvalidTask,
 }

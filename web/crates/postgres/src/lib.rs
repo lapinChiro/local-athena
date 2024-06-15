@@ -56,11 +56,17 @@ pub async fn set_task(client: &Client, query_statement: &str) -> Result<Task, er
     }
 }
 
-pub async fn get_task(client: &Client, task_uuid: &Uuid) -> Result<Vec<Task>, error::Error> {
+pub async fn get_task(client: &Client, task_uuid: &Uuid) -> Result<Task, error::Error> {
     let sql = "SELECT to_jsonb(t1.*) FROM get_task(p_uuid := $1) AS t1;";
     let rows = execute(client, sql, &[&task_uuid]).await?;
 
-    convert_task(rows)
+    let task = convert_task(rows)?;
+
+    if task.len() == 0 {
+        Ok(task.first().unwrap().clone())
+    } else {
+        Err(error::Error::InvalidTask)
+    }
 }
 
 pub async fn set_get_pending_task(client: &Client) -> Result<Vec<Task>, error::Error> {

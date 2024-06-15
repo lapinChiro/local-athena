@@ -7,4 +7,7 @@ pub enum Error {
 
     #[error("Json {0}")]
     Json(#[from] serde_json::Error),
+
+    #[error("IOError {0}")]
+    IOError(#[from] std::io::Error),
 }

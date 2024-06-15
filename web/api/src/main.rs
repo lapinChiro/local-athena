@@ -3,7 +3,7 @@ use tokio::task::JoinHandle;
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let abort_handle = run_looper().abort_handle();
-    handlers::make_router().await;
+    let _ = handlers::make_router().await;
 
     println!("abort_handle");
     abort_handle.abort();
