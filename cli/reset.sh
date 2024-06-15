@@ -7,8 +7,14 @@ reset() {
     case $subcommand in
     "hive-metastore") reset_catalog ;;
     "minio") reset_minio ;;
+    "all") reset_all ;;
     *) usage ;;
     esac
+}
+
+reset_all() {
+    reset_minio
+    reset_catalog
 }
 
 reset_minio() {
@@ -24,6 +30,7 @@ usage() {
     echo 'Commands:' 1>&2
     echo ' reset hive-metastore     hive-metastoreのデータを消す' 1>&2
     echo ' reset minio              minioのデータを消す' 1>&2
+    echo ' reset all                hive-metastoreとminioのデータを消す' 1>&2
 }
 
 reset "$@"

@@ -11,6 +11,8 @@ use serde_json::Value;
 use std::time::Duration;
 use uuid::Uuid;
 
+pub mod error;
+
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Task {
     pub uuid: Option<Uuid>,
@@ -21,7 +23,7 @@ pub struct Task {
     pub updated_at: Option<DateTime<Utc>>,
 }
 
-pub fn get_postgres_pool() -> anyhow::Result<Pool> {
+pub fn get_postgres_pool() -> Result<Pool, error::Error> {
     let pool_config = PoolConfig {
         max_size: 2,
         timeouts: Timeouts {
@@ -40,28 +42,32 @@ pub fn get_postgres_pool() -> anyhow::Result<Pool> {
         pool: Some(pool_config),
         ..Default::default()
     };
-    anyhow::Ok(cfg.create_pool(Some(Tokio1), NoTls)?)
+    Ok(cfg.create_pool(Some(Tokio1), NoTls)?)
 }
 
-pub async fn set_task(client: &Client, query_statement: &str) -> anyhow::Result<Vec<Task>> {
+pub async fn set_task(client: &Client, query_statement: &str) -> Result<Task, error::Error> {
     let sql = "SELECT to_jsonb(t1.*) FROM set_insert_task(p_query_statement := $1) AS t1;";
     let rows = execute(client, sql, &[&query_statement]).await?;
 
-    anyhow::Ok(convert_task(rows))
+    if let Some(task) = convert_task(rows)?.first() {
+        Ok(task.clone())
+    } else {
+        Err(error::Error::CreateTask)
+    }
 }
 
-pub async fn get_task(client: &Client, task_uuid: &Uuid) -> anyhow::Result<Vec<Task>> {
+pub async fn get_task(client: &Client, task_uuid: &Uuid) -> Result<Vec<Task>, error::Error> {
     let sql = "SELECT to_jsonb(t1.*) FROM get_task(p_uuid := $1) AS t1;";
     let rows = execute(client, sql, &[&task_uuid]).await?;
 
-    anyhow::Ok(convert_task(rows))
+    convert_task(rows)
 }
 
-pub async fn set_get_pending_task(client: &Client) -> anyhow::Result<Vec<Task>> {
+pub async fn set_get_pending_task(client: &Client) -> Result<Vec<Task>, error::Error> {
     let sql = "SELECT to_jsonb(t1.*) FROM get_set_update_pending_task() AS t1;";
     let rows = execute(client, sql, &[]).await?;
 
-    anyhow::Ok(convert_task(rows))
+    convert_task(rows)
 }
 
 pub async fn set_finish_task(
@@ -69,38 +75,29 @@ pub async fn set_finish_task(
     task_uuid: &Uuid,
     query_result: Value,
     result_stauts: String,
-) -> anyhow::Result<Vec<Task>> {
+) -> Result<Vec<Task>, error::Error> {
     let sql = "SELECT to_jsonb(t1.*) FROM set_update_task_result(p_uuid := $1, p_result := $2, p_status := $3) AS t1;";
     println!("{:?}", query_result);
-    let rows = execute(client, sql, &[&task_uuid, &query_result, &result_stauts]).await;
+    let rows = execute(client, sql, &[&task_uuid, &query_result, &result_stauts]).await?;
 
-    match rows {
-        Ok(r) => anyhow::Ok(convert_task(r)),
-        Err(e) => {
-            println!("PPPPPPP");
-            panic!("{e}")
-        }
-    }
+    convert_task(rows)
 }
 
 async fn execute(
     client: &Client,
     sql: &str,
     params: &[&(dyn ToSql + Sync)],
-) -> anyhow::Result<Vec<Row>> {
-    let res = client.query(sql, params).await;
+) -> Result<Vec<Row>, error::Error> {
+    let res = client.query(sql, params).await?;
 
-    match res {
-        Ok(r) => anyhow::Ok(r),
-        Err(e) => {
-            println!("NININI");
-            panic!("{e}")
-        }
-    }
+    Ok(res)
 }
 
-fn convert_task(rows: Vec<Row>) -> Vec<Task> {
-    rows.into_iter()
-        .map(|row| serde_json::from_value(row.get(0)).unwrap())
-        .collect()
+fn convert_task(rows: Vec<Row>) -> Result<Vec<Task>, error::Error> {
+    let tasks: Result<Vec<_>, _> = rows
+        .into_iter()
+        .map(|row| serde_json::from_value::<Task>(row.get(0)))
+        .collect();
+
+    tasks.map_err(|e| e.into())
 }
