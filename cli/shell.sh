@@ -9,7 +9,7 @@ shell() {
     "trino") entry_shell trino ;;
     "hive-metastore") entry_shell hive-metastore ;;
     "minio") entry_shell minio ;;
-    "web") entry_shell web ;;
+    "client_service") entry_shell client_service ;;
     "postgres") entry_shell postgres ;;
     *) usage ;;
     esac
@@ -25,7 +25,7 @@ usage() {
     echo ' shell trino              trinoコンテナを再起動する' 1>&2
     echo ' shell hive-metastore     hive-metastoreコンテナを再起動する' 1>&2
     echo ' shell minio              minioコンテナを再起動する' 1>&2
-    echo ' shell  web               webコンテナを再起動する' 1>&2
+    echo ' shell  client_service               client_serviceコンテナを再起動する' 1>&2
     echo ' shell  postgres          postgresコンテナを再起動する' 1>&2
 }
 

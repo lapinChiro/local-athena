@@ -31,13 +31,7 @@ exec_root() {
 }
 
 usage() {
-    echo 'Commands:' 1>&2
-    echo ' test glue               glueコンテナのログを表示する' 1>&2
-    echo ' test trino              trinoコンテナのログを表示する' 1>&2
-    echo ' test hive-metastore     hive-metastoreコンテナのログを表示する' 1>&2
-    echo ' test minio              minioコンテナのログを表示する' 1>&2
-    echo ' test web                webコンテナのログを表示する' 1>&2
-    echo ' test postgres           postgresコンテナのログを表示する' 1>&2
+    echo 'cli/test.shを確認' 1>&2
 }
 
 test "$@"

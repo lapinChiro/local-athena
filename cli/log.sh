@@ -9,7 +9,7 @@ log() {
     "trino") show_log trino ;;
     "hive-metastore") show_log hive-metastore ;;
     "minio") show_log minio ;;
-    "web") show_log web ;;
+    "client_service") show_log client_service ;;
     "postgres") show_log postgres ;;
     *) usage ;;
     esac
@@ -25,7 +25,7 @@ usage() {
     echo ' log trino              trinoコンテナのログを表示する' 1>&2
     echo ' log hive-metastore     hive-metastoreコンテナのログを表示する' 1>&2
     echo ' log minio              minioコンテナのログを表示する' 1>&2
-    echo ' log web                webコンテナのログを表示する' 1>&2
+    echo ' log client_service                client_serviceコンテナのログを表示する' 1>&2
     echo ' log postgres           postgresコンテナのログを表示する' 1>&2
 }
 

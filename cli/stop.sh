@@ -9,7 +9,7 @@ stop() {
     "trino") stop_service trino ;;
     "hive-metastore") stop_service hive-metastore ;;
     "minio") stop_service minio ;;
-    "web") stop_service web ;;
+    "client_service") stop_service client_service ;;
     "postgres") stop_service postgres ;;
     "all") stop_service ;;
     *) usage ;;
@@ -26,7 +26,7 @@ usage() {
     echo ' stop trino              trinoコンテナを停止する' 1>&2
     echo ' stop hive-metastore     hive-metastoreコンテナを停止する' 1>&2
     echo ' stop minio              minioコンテナを停止する' 1>&2
-    echo ' stop web                webコンテナを停止する' 1>&2
+    echo ' stop client_service                client_serviceコンテナを停止する' 1>&2
     echo ' stop postgres           postgresコンテナを停止する' 1>&2
     echo ' stop all                全てのコンテナを停止する' 1>&2
 }
