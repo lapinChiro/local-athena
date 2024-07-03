@@ -5,8 +5,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  - package-ecosystem: npm
-    directory: "/javascript"
+  - package-ecosystem: cargo
+    directory: "/client_service"
     schedule:
       interval: "weekly"
   - package-ecosystem: bundler
