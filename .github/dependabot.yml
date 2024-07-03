@@ -9,7 +9,3 @@ updates:
     directory: "/client_service"
     schedule:
       interval: "weekly"
-  - package-ecosystem: bundler
-    directory: "/ruby"
-    schedule:
-      interval: "weekly"
