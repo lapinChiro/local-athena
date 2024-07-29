@@ -8,6 +8,6 @@ edition = "2021"
 [dependencies]
 prusto = { git = "https://github.com/lapinChiro/prusto", features = ["presto"] }
 serde = { version = "^1.0.203", features = ["derive"] }
-tokio = { version = "1.38.0", features = ["full"] }
+tokio = { version = "1.39.2", features = ["full"] }
 serde_json = "1.0.120"
 thiserror = "1.0.61"
