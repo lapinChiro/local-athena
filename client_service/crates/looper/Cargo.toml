@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = "0.7.2"
+axum = "0.7.6"
 serde_json = "1.0.120"
 resident-utils = { version = "0.5", features = ["postgres"] }
 uuid = { version = "1.9.1", features = ["serde", "v4"] }
