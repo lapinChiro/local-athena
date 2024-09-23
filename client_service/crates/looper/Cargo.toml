@@ -13,5 +13,5 @@ uuid = { version = "1.9.1", features = ["serde", "v4"] }
 chrono = { version = "0.4.38", features = ["serde"] }
 trino = { path = "../trino" }
 postgres = { path = "../postgres" }
-thiserror = "1.0.61"
+thiserror = "1.0.64"
 tokio = { version = "1.38.0", features = ["full"] }
